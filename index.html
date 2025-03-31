@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic 8 Ball</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 400px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .rounded-input {
+            background-color: white;
+            border-radius: 10px;
+            padding: 5px 10px;
+            margin-bottom: 20px;
+        }
+
+        .rounded-input input[type="text"] {
+            width: 100%;
+            border: none;
+            padding: 8px;
+            font-size: 12px;
+            outline: none;
+            background-color: transparent;
+        }
+
+        .rounded-button {
+            background-color: #808080;
+            color: black;
+            border: none;
+            border-radius: 18px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 12px;
+            display: block;
+            margin: 10px auto;
+        }
+
+        .rounded-button:active {
+            background-color: #606060;
+        }
+
+        .response-label {
+            text-align: center;
+            font-style: italic;
+            font-size: 14px;
+            margin-top: 20px;
+            color: #101010;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="rounded-input">
+            <input type="text" id="questionInput" placeholder="Type your message..." style="color: grey;">
+        </div>
+        <button class="rounded-button" id="shakeButton">shake the ball</button>
+        <div class="response-label" id="responseLabel"></div>
+    </div>
+
+    <script>
+        const questionInput = document.getElementById('questionInput');
+        const shakeButton = document.getElementById('shakeButton');
+        const responseLabel = document.getElementById('responseLabel');
+
+        const responses = [
+            "certainly a ban is in order",
+            "without a doubt",
+            "SMEAR! SMEAR! SMEAR! SMEAR!",
+            "no, they have done no wrong",
+            "i have decided they are racist",
+            "ahhhhhh... mmmphppf...",
+            "outlook: AHHHHHHHHHHHH",
+            "yes",
+            "signs are pointing to no...",
+            "anon, why do you keep pondering my orb like that?",
+            "can't you take yes for an answer",
+            "sources (me) say no. fuck you",
+            "KILL THEM KILL THEM KILL THEM",
+            "i think yes",
+            "ask qopt (kill)",
+            "nicki told me to tell you no",
+            "probably not",
+            "outlook not so great",
+            "yes? yes. maybe? i don't know you're frightening me",
+            "doubtful."
+        ];
+
+        questionInput.addEventListener('focus', () => {
+            if (questionInput.value === "Type your message...") {
+                questionInput.value = '';
+                questionInput.style.color = 'black';
+            }
+        });
+
+        questionInput.addEventListener('blur', () => {
+            if (!questionInput.value) {
+                questionInput.value = "Type your message...";
+                questionInput.style.color = 'grey';
+            }
+        });
+        questionInput.addEventListener('input', () => {
+          if (!questionInput.value) {
+            questionInput.style.color = 'grey';
+          }else{
+            questionInput.style.color = 'black';
+          }
+        });
+
+        shakeButton.addEventListener('click', () => {
+            if (questionInput.value && questionInput.value !== "Type your message...") {
+                const randomIndex = Math.floor(Math.random() * responses.length);
+                responseLabel.textContent = responses[randomIndex];
+                questionInput.value = "Type your message...";
+                questionInput.style.color = 'grey';
+            } else {
+                responseLabel.textContent = "plz ask a question";
+            }
+        });
+    </script>
+</body>
+</html>
