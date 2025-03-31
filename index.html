@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magic 8 Ball</title>
+    <title>social suicide magic 8 ball</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,12 +13,21 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            flex-direction: column;
+            transition: transform 0.3s ease; /* Added transition for smooth movement */
+        }
+
+        body.raised { /* Added raised class */
+            transform: translateY(-10vh); /* Adjust the value for desired raise */
         }
 
         .container {
             width: 400px;
             padding: 20px;
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .rounded-input {
@@ -26,6 +35,13 @@
             border-radius: 10px;
             padding: 5px 10px;
             margin-bottom: 20px;
+            border: 2px solid transparent;
+            transition: border-color 0.3s ease;
+            width: 100%;
+        }
+
+        .rounded-input.focused {
+            border-color: lightblue;
         }
 
         .rounded-input input[type="text"] {
@@ -47,6 +63,11 @@
             font-size: 12px;
             display: block;
             margin: 10px auto;
+            transition: transform 0.2s ease;
+        }
+
+        .rounded-button:hover {
+            transform: scale(1.05);
         }
 
         .rounded-button:active {
@@ -60,10 +81,27 @@
             margin-top: 20px;
             color: #101010;
         }
+
+        .icon-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .icon-container img {
+            max-width: 200px;
+            height: auto;
+            border-radius: 10px;
+        }
+
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="icon-container">
+            <img src="icon.jpg" alt="Icon">
+        </div>
         <div class="rounded-input">
             <input type="text" id="questionInput" placeholder="Type your message..." style="color: grey;">
         </div>
@@ -75,6 +113,8 @@
         const questionInput = document.getElementById('questionInput');
         const shakeButton = document.getElementById('shakeButton');
         const responseLabel = document.getElementById('responseLabel');
+        const roundedInput = document.querySelector('.rounded-input');
+        const body = document.body; // Select the body element
 
         const responses = [
             "certainly a ban is in order",
@@ -104,6 +144,8 @@
                 questionInput.value = '';
                 questionInput.style.color = 'black';
             }
+            roundedInput.classList.add('focused');
+            body.classList.add('raised'); // Add raised class on focus
         });
 
         questionInput.addEventListener('blur', () => {
@@ -111,13 +153,16 @@
                 questionInput.value = "Type your message...";
                 questionInput.style.color = 'grey';
             }
+            roundedInput.classList.remove('focused');
+            body.classList.remove('raised'); // Remove raised class on blur
         });
+
         questionInput.addEventListener('input', () => {
-          if (!questionInput.value) {
-            questionInput.style.color = 'grey';
-          }else{
-            questionInput.style.color = 'black';
-          }
+            if (!questionInput.value) {
+                questionInput.style.color = 'grey';
+            } else {
+                questionInput.style.color = 'black';
+            }
         });
 
         shakeButton.addEventListener('click', () => {
